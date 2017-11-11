@@ -2,6 +2,7 @@ package com.mwsi.cepik.security;
 
 import com.mwsi.cepik.border.guards.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -9,7 +10,14 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import java.util.Arrays;
+
+import static com.mwsi.cepik.security.SecurityConstants.ALLOWED_ORIGIN_METHODS;
+import static com.mwsi.cepik.security.SecurityConstants.FRONT_URL;
 import static com.mwsi.cepik.security.SecurityConstants.SIGN_UP_URL;
 
 @EnableWebSecurity
@@ -26,7 +34,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable().authorizeRequests()
+        http.csrf().disable().cors().and().authorizeRequests()
                 .antMatchers(HttpMethod.PUT, SIGN_UP_URL).permitAll()
                 .anyRequest().authenticated()
                 .and()
@@ -38,6 +46,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userService).passwordEncoder(bCryptPasswordEncoder);
+    }
+
+    @Bean
+    CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.addAllowedOrigin("*");
+        configuration.addAllowedHeader("*");
+        configuration.setAllowedMethods(ALLOWED_ORIGIN_METHODS);
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
     }
 
 }
