@@ -1,8 +1,7 @@
 package com.mwsi.cepik.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mwsi.cepik.border.guards.User;
-import com.mwsi.cepik.border.guards.UserService;
+import com.mwsi.cepik.border.guards.appuser.User;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,6 +60,6 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 .signWith(SignatureAlgorithm.HS512, SECRET.getBytes())
                 .compact();
 
-        res.getWriter().write("{\"Authtoken\": \"" + TOKEN_PREFIX + token + "\"}");
+        res.getWriter().write("{\"" + HEADER_STRING + "\": \"" + TOKEN_PREFIX + token + "\"}");
     }
 }

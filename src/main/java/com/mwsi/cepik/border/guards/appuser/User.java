@@ -1,4 +1,4 @@
-package com.mwsi.cepik.border.guards;
+package com.mwsi.cepik.border.guards.appuser;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

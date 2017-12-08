@@ -1,4 +1,4 @@
-package com.mwsi.cepik.border.guards;
+package com.mwsi.cepik.border.guards.appuser;
 
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,12 +24,8 @@ public class UserService implements UserDetailsService {
     }
 
     @Override //metoda na potrzeby autoryzacji
-    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        User user = userRepository.findByName(s);
-
-        if (user == null) {
-            throw new UsernameNotFoundException(s);
-        }
+    public UserDetails loadUserByUsername(String username) {
+        User user = userRepository.findByName(username).orElseThrow(() -> new UsernameNotFoundException(username));
 
         return new org.springframework.security.core.userdetails.User(
                 user.getName(),

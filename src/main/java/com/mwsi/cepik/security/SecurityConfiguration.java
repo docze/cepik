@@ -1,6 +1,6 @@
 package com.mwsi.cepik.security;
 
-import com.mwsi.cepik.border.guards.UserService;
+import com.mwsi.cepik.border.guards.appuser.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
@@ -14,10 +14,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import java.util.Arrays;
-
 import static com.mwsi.cepik.security.SecurityConstants.ALLOWED_ORIGIN_METHODS;
-import static com.mwsi.cepik.security.SecurityConstants.FRONT_URL;
 import static com.mwsi.cepik.security.SecurityConstants.SIGN_UP_URL;
 
 @EnableWebSecurity
@@ -34,13 +31,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable().cors().and().authorizeRequests()
-                .antMatchers(HttpMethod.PUT, SIGN_UP_URL).permitAll()
+        http.csrf().disable().cors()
+                .and().authorizeRequests().antMatchers(HttpMethod.POST, SIGN_UP_URL).permitAll()
+                .and().authorizeRequests().antMatchers("/h2/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilter(new JWTAuthorizationFilter(authenticationManager()))
                 .addFilter(new JWTAuthenticationFilter(authenticationManager()))
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and().headers().frameOptions().sameOrigin();
     }
 
     @Override
