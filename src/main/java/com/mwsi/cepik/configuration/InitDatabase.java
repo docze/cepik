@@ -1,7 +1,7 @@
 package com.mwsi.cepik.configuration;
 
-import com.mwsi.cepik.border.guards.User;
-import com.mwsi.cepik.border.guards.UserService;
+import com.mwsi.cepik.border.guards.appuser.User;
+import com.mwsi.cepik.border.guards.appuser.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
