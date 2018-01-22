@@ -3,6 +3,7 @@ package com.mwsi.cepik.security;
 import com.mwsi.cepik.border.guards.appuser.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -18,6 +19,7 @@ import static com.mwsi.cepik.security.SecurityConstants.ALLOWED_ORIGIN_METHODS;
 import static com.mwsi.cepik.security.SecurityConstants.SIGN_UP_URL;
 
 @EnableWebSecurity
+@Profile("prod")
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 
     private UserService userService;

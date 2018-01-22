@@ -9,7 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Data
-@NoArgsConstructor //konstruktor na potrzeby autoryzacji
+@NoArgsConstructor
 @Entity
 public class User {
 

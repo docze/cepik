@@ -17,6 +17,6 @@ public class InitDatabase {
     public void initDb() {
         //users
         User testUser = new User("test", "test@test.pl", "test");
-        userService.save(testUser);
+        userService.add(testUser);
     }
 }
