@@ -1,6 +1,8 @@
 package com.mwsi.cepik.cek.service;
 
+import com.mwsi.cepik.cek.model.Address;
 import com.mwsi.cepik.cek.model.Driver;
+import com.mwsi.cepik.cek.model.DriverForm;
 import com.mwsi.cepik.cek.repository.DriverRepository;
 import com.mwsi.cepik.exception.DriverNotFoundException;
 import lombok.AllArgsConstructor;
@@ -17,8 +19,8 @@ public class DriverService {
     private final DriverRepository driverRepository;
 
     @Transactional
-    public void add(Driver driver) {
-        driverRepository.save(driver);
+    public void add(DriverForm driverForm) {
+        driverRepository.save(new Driver(driverForm));
     }
 
     public Driver findById(Long id) {
@@ -39,13 +41,19 @@ public class DriverService {
     }
 
     @Transactional
-    public void update(Driver driver, Long id) {
-        Driver dbDriver = driverRepository.getOne(id);
-        dbDriver.setAddress(driver.getAddress());
-        dbDriver.setPesel(driver.getPesel());
-        dbDriver.setFirstName(driver.getFirstName());
-        dbDriver.setLastName(driver.getLastName());
-        dbDriver.setExaminationElapseDate(driver.getExaminationElapseDate());
+    public void update(DriverForm driverForm, Long id) {
+        Address address = new Address(
+                driverForm.getCity(), driverForm.getZipCode(),
+                driverForm.getStreet(), driverForm.getHouseNumber(),
+                driverForm.getResidenceNumber()
+        );
+        Driver dbDriver = findById(id);
+        dbDriver.setAddress(address);
+        dbDriver.setPesel(driverForm.getPesel());
+        dbDriver.setFirstName(driverForm.getFirstName());
+        dbDriver.setLastName(driverForm.getLastName());
+        dbDriver.setExaminationElapseDate(driverForm.getExaminationElapseDate());
+        driverRepository.save(dbDriver);
     }
 }
 

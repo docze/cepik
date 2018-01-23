@@ -55,4 +55,16 @@ public class Driver {
         this.lastName = lastName;
         this.examinationElapseDate = examinationElapseDate;
     }
+
+    public Driver(DriverForm driverForm) {
+        this.address = new Address(
+                driverForm.getCity(), driverForm.getZipCode(),
+                driverForm.getStreet(), driverForm.getHouseNumber(),
+                driverForm.getResidenceNumber()
+        );
+        this.pesel = driverForm.getPesel();
+        this.firstName = driverForm.getFirstName();
+        this.lastName = driverForm.getLastName();
+        this.examinationElapseDate = driverForm.getExaminationElapseDate();
+    }
 }

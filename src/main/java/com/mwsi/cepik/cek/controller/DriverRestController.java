@@ -1,12 +1,16 @@
 package com.mwsi.cepik.cek.controller;
 
 import com.mwsi.cepik.cek.model.Driver;
+import com.mwsi.cepik.cek.model.DriverForm;
 import com.mwsi.cepik.cek.service.DriverService;
+import com.mwsi.cepik.exception.FormValidationException;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -27,14 +31,20 @@ public class DriverRestController {
     }
 
     @PostMapping
-    public ResponseEntity add(@RequestBody Driver driver) {
-        driverService.add(driver);
+    public ResponseEntity add(@RequestBody @Valid DriverForm driverForm, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            throw new FormValidationException(bindingResult.getFieldErrors());
+        }
+        driverService.add(driverForm);
         return new ResponseEntity(HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity update(@RequestBody Driver driver, @PathVariable Long id) {
-        driverService.update(driver, id);
+    public ResponseEntity update(@RequestBody @Valid DriverForm driverForm, @PathVariable Long id, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            throw new FormValidationException(bindingResult.getFieldErrors());
+        }
+        driverService.update(driverForm, id);
         return new ResponseEntity(HttpStatus.OK);
     }
 

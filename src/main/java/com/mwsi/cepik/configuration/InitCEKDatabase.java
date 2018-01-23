@@ -4,9 +4,9 @@ import com.mwsi.cepik.cek.model.Address;
 import com.mwsi.cepik.cek.model.Authorisation;
 import com.mwsi.cepik.cek.model.Driver;
 import com.mwsi.cepik.cek.model.DrivingLicence;
-import com.mwsi.cepik.cek.service.AuthorisationService;
-import com.mwsi.cepik.cek.service.DriverService;
-import com.mwsi.cepik.cek.service.DrivingLicenceService;
+import com.mwsi.cepik.cek.repository.AuthorisationRepository;
+import com.mwsi.cepik.cek.repository.DriverRepository;
+import com.mwsi.cepik.cek.repository.DrivingLicenceRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
@@ -19,9 +19,9 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class InitCEKDatabase {
 
-    private final DriverService driverService;
-    private final DrivingLicenceService drivingLicenceService;
-    private final AuthorisationService authorisationService;
+    private final DriverRepository driverRepository;
+    private final DrivingLicenceRepository drivingLicenceRepository;
+    private final AuthorisationRepository authorisationRepository;
 
     @EventListener(ContextRefreshedEvent.class)
     public void initDb() {
@@ -34,7 +34,7 @@ public class InitCEKDatabase {
                 "Kowalski",
                 Date.valueOf(LocalDate.of(2020, 3, 12))
         );
-        driverService.add(driver1);
+        driverRepository.save(driver1);
 
         Authorisation authorisation = new Authorisation(
                 Authorisation.Category.A,
@@ -42,7 +42,7 @@ public class InitCEKDatabase {
                 Date.valueOf(LocalDate.of(2027, 4, 10)),
                 driver1);
 
-        authorisationService.add(authorisation);
+        authorisationRepository.save(authorisation);
 
         DrivingLicence drivingLicence = new DrivingLicence(
                 Date.valueOf(LocalDate.of(2012, 10, 5)),
@@ -50,7 +50,7 @@ public class InitCEKDatabase {
                 "AAABB-3",
                 driver1);
 
-        drivingLicenceService.add(drivingLicence);
+        drivingLicenceRepository.save(drivingLicence);
 
     }
 }
