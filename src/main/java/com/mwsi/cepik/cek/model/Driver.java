@@ -1,8 +1,11 @@
 package com.mwsi.cepik.cek.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -36,9 +39,13 @@ public class Driver {
     private java.sql.Date examinationElapseDate;
 
     @OneToMany(mappedBy = "driver")
+    @JsonIgnore
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<Authorisation> authorisationSet;
 
     @OneToMany(mappedBy = "driver")
+    @JsonIgnore
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<DrivingLicence> drivingLicenceSet;
 
     public Driver(Address address, String pesel, String firstName, String lastName, Date examinationElapseDate) {

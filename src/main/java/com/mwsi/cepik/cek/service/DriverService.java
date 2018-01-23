@@ -17,21 +17,35 @@ public class DriverService {
     private final DriverRepository driverRepository;
 
     @Transactional
-    public void add(Driver driver){
+    public void add(Driver driver) {
         driverRepository.save(driver);
     }
 
-    public Driver findById(Long id){
+    public Driver findById(Long id) {
         return driverRepository.findById(id).orElseThrow(() -> new DriverNotFoundException(id));
     }
 
-    public Driver findByPesel(String pesel){
+    public Driver findByPesel(String pesel) {
         return driverRepository.findByPesel(pesel).orElseThrow(() -> new DriverNotFoundException(pesel));
     }
 
-    public List<Driver> findAll(){
+    public List<Driver> findAll() {
         return driverRepository.findAll();
     }
 
+    @Transactional
+    public void delete(Long id) {
+        driverRepository.delete(id);
+    }
+
+    @Transactional
+    public void update(Driver driver, Long id) {
+        Driver dbDriver = driverRepository.getOne(id);
+        dbDriver.setAddress(driver.getAddress());
+        dbDriver.setPesel(driver.getPesel());
+        dbDriver.setFirstName(driver.getFirstName());
+        dbDriver.setLastName(driver.getLastName());
+        dbDriver.setExaminationElapseDate(driver.getExaminationElapseDate());
+    }
 }
 

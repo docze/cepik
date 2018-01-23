@@ -12,7 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 public class UserRestController {
 
-    private UserService userService;
+    private final UserService userService;
 
     @GetMapping("/{id}")
     public ResponseEntity<User> findById(@PathVariable Integer id) {
