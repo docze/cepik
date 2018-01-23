@@ -1,12 +1,16 @@
 package com.mwsi.cepik.cek.controller;
 
 import com.mwsi.cepik.cek.model.DrivingLicence;
+import com.mwsi.cepik.cek.model.form.DrivingLicenceForm;
 import com.mwsi.cepik.cek.service.DrivingLicenceService;
+import com.mwsi.cepik.exception.FormValidationException;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -27,14 +31,20 @@ public class DrivingLicenceRestController {
     }
 
     @PostMapping
-    public ResponseEntity add(@RequestBody DrivingLicence drivingLicence) {
-        drivingLicenceService.add(drivingLicence);
+    public ResponseEntity add(@RequestBody @Valid DrivingLicenceForm drivingLicenceForm, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            throw new FormValidationException(bindingResult.getFieldErrors());
+        }
+        drivingLicenceService.add(drivingLicenceForm);
         return new ResponseEntity(HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity update(@RequestBody DrivingLicence drivingLicence, @PathVariable Long id) {
-        drivingLicenceService.update(drivingLicence, id);
+    public ResponseEntity update(@RequestBody @Valid DrivingLicenceForm drivingLicenceForm, @PathVariable Long id, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            throw new FormValidationException(bindingResult.getFieldErrors());
+        }
+        drivingLicenceService.update(drivingLicenceForm, id);
         return new ResponseEntity(HttpStatus.OK);
     }
 
@@ -43,6 +53,4 @@ public class DrivingLicenceRestController {
         drivingLicenceService.delete(id);
         return new ResponseEntity(HttpStatus.OK);
     }
-
-
 }

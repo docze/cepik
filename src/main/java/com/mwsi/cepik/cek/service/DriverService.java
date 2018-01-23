@@ -2,7 +2,7 @@ package com.mwsi.cepik.cek.service;
 
 import com.mwsi.cepik.cek.model.Address;
 import com.mwsi.cepik.cek.model.Driver;
-import com.mwsi.cepik.cek.model.DriverForm;
+import com.mwsi.cepik.cek.model.form.DriverForm;
 import com.mwsi.cepik.cek.repository.DriverRepository;
 import com.mwsi.cepik.exception.DriverNotFoundException;
 import lombok.AllArgsConstructor;

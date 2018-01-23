@@ -1,7 +1,7 @@
 package com.mwsi.cepik.cek.controller;
 
 import com.mwsi.cepik.cek.model.Driver;
-import com.mwsi.cepik.cek.model.DriverForm;
+import com.mwsi.cepik.cek.model.form.DriverForm;
 import com.mwsi.cepik.cek.service.DriverService;
 import com.mwsi.cepik.exception.FormValidationException;
 import lombok.AllArgsConstructor;

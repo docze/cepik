@@ -1,6 +1,8 @@
 package com.mwsi.cepik.cek.service;
 
+import com.mwsi.cepik.cek.model.Driver;
 import com.mwsi.cepik.cek.model.DrivingLicence;
+import com.mwsi.cepik.cek.model.form.DrivingLicenceForm;
 import com.mwsi.cepik.cek.repository.DrivingLicenceRepository;
 import com.mwsi.cepik.exception.DrivingLicenceNotFoundException;
 import lombok.AllArgsConstructor;
@@ -15,9 +17,17 @@ import java.util.List;
 public class DrivingLicenceService {
 
     private final DrivingLicenceRepository drivingLicenceRepository;
+    private final DriverService driverService;
 
     @Transactional
-    public void add(DrivingLicence drivingLicence){
+    public void add(DrivingLicenceForm drivingLicenceForm) {
+        Driver driver = driverService.findById(drivingLicenceForm.getDriverId());
+        DrivingLicence drivingLicence = new DrivingLicence(
+                drivingLicenceForm.getFrom(),
+                drivingLicenceForm.getTo(),
+                drivingLicenceForm.getSequence(),
+                driver
+        );
         drivingLicenceRepository.save(drivingLicence);
     }
 
@@ -35,11 +45,13 @@ public class DrivingLicenceService {
     }
 
     @Transactional
-    public void update(DrivingLicence drivingLicence, Long id) {
+    public void update(DrivingLicenceForm drivingLicenceForm, Long id) {
+        Driver driver = driverService.findById(drivingLicenceForm.getDriverId());
         DrivingLicence dbDrivingLicence = drivingLicenceRepository.getOne(id);
-        dbDrivingLicence.setFrom(drivingLicence.getFrom());
-        dbDrivingLicence.setTo(drivingLicence.getTo());
-        dbDrivingLicence.setSequence(drivingLicence.getSequence());
-        dbDrivingLicence.setDriver(drivingLicence.getDriver());
+        dbDrivingLicence.setFrom(drivingLicenceForm.getFrom());
+        dbDrivingLicence.setTo(drivingLicenceForm.getTo());
+        dbDrivingLicence.setSequence(drivingLicenceForm.getSequence());
+        dbDrivingLicence.setDriver(driver);
+        drivingLicenceRepository.save(dbDrivingLicence);
     }
 }

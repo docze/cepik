@@ -1,6 +1,7 @@
 package com.mwsi.cepik.cek.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.mwsi.cepik.cek.model.form.DriverForm;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

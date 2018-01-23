@@ -1,4 +1,4 @@
-package com.mwsi.cepik.cek.model;
+package com.mwsi.cepik.cek.model.form;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
