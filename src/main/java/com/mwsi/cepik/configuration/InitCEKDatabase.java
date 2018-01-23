@@ -14,6 +14,8 @@ import org.springframework.stereotype.Component;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 @AllArgsConstructor
@@ -27,30 +29,35 @@ public class InitCEKDatabase {
     public void initDb() {
 
         //drivers
-        Driver driver1 = new Driver(
-                new Address("Warszawa", "01-222", "Marszałkowska", "33a", "22"),
-                "12019922123",
-                "Jan",
-                "Kowalski",
-                Date.valueOf(LocalDate.of(2020, 3, 12))
-        );
-        driverRepository.save(driver1);
+        List<Driver> driverList = new ArrayList<>();
+        for (int i = 0; i < 50; i++) {
+            driverList.add(new Driver(
+                    new Address("Warszawa", "01-222", "Marszałkowska", "33a", "22"),
+                    "12019922"+(int) (100 + (Math.random() * 899)), "Jan", "Kowalski", Date.valueOf(LocalDate.of(2010+i%20, (i%12)+1, (i%27)+1))));
+        }
 
-        Authorisation authorisation = new Authorisation(
-                Authorisation.Category.A,
-                Date.valueOf(LocalDate.of(2012, 10, 5)),
-                Date.valueOf(LocalDate.of(2027, 4, 10)),
-                driver1);
+        driverRepository.save(driverList);
 
-        authorisationRepository.save(authorisation);
+        List<Authorisation> authorisationList = new ArrayList<>();
+        for (int i = 0; i < 70; i++) {
+            authorisationList.add(new Authorisation(
+                    Authorisation.Category.A,
+                    Date.valueOf(LocalDate.of(2012-(i%12), (i%7)+1, (i%24)+1)),
+                    Date.valueOf(LocalDate.of(2027, (i%9)+1, (i%20)+1)),
+                    driverList.get((int) (0 + (Math.random() * 49)))));
+        }
 
-        DrivingLicence drivingLicence = new DrivingLicence(
-                Date.valueOf(LocalDate.of(2012, 10, 5)),
-                Date.valueOf(LocalDate.of(2027, 4, 10)),
-                "AAABB-3",
-                driver1);
+        authorisationRepository.save(authorisationList);
 
-        drivingLicenceRepository.save(drivingLicence);
+        List<DrivingLicence> drivingLicenceList = new ArrayList<>();
+        for (int i = 0; i < 70; i++) {
+            drivingLicenceList.add(new DrivingLicence(
+                    Date.valueOf(LocalDate.of(2012-(i%6), (i%12)+1, (i%26)+1)),
+                    Date.valueOf(LocalDate.of(2027+i%3, (i%5)+1, (i%10)+1)),
+                    "AAABB-3",
+                    driverList.get((int) (0 + (Math.random() * 49)))));
+        }
 
+        drivingLicenceRepository.save(drivingLicenceList);
     }
 }

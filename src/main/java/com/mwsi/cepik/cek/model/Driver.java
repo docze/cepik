@@ -26,7 +26,7 @@ public class Driver {
     @Embedded
     private Address address;
 
-    @Column(name = "PESEL", length = 11)
+    @Column(name = "PESEL", length = 11, unique = true)
     private String pesel;
 
     @Column(name = "imie", length = 50)
