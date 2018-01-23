@@ -21,9 +21,12 @@ public class UserService implements UserDetailsService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Transactional
-    public User add(User u) {
-        u.setPassword(encodePassword(u.getPassword()));
-        return userRepository.save(u);
+    public void add(UserForm userForm) {
+        User user = new User();
+        user.setName(userForm.getName());
+        user.setEmail(userForm.getEmail());
+        user.setPassword(encodePassword(userForm.getPassword()));
+        userRepository.save(user);
     }
 
     @Override
@@ -37,7 +40,7 @@ public class UserService implements UserDetailsService {
         );
     }
 
-    User findUserById(Integer id) {
+    User findById(Integer id) {
         return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
     }
 
@@ -46,11 +49,12 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional
-    void update(User user, Integer id) {
-        User dbUser = userRepository.getOne(id);
-        dbUser.setEmail(user.getEmail());
-        dbUser.setName(user.getName());
-        dbUser.setPassword(user.getPassword());
+    void update(UserForm userForm, Integer id) {
+        User dbUser = findById(id);
+        dbUser.setEmail(userForm.getEmail());
+        dbUser.setName(userForm.getName());
+        dbUser.setPassword(encodePassword(userForm.getPassword()));
+        userRepository.save(dbUser);
     }
 
     @Transactional
