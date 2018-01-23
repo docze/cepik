@@ -1,4 +1,4 @@
-package com.mwsi.cepik.cek;
+package com.mwsi.cepik.cek.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-class Authorisation {
+public class Authorisation {
 
     public enum Category {
         A("A"), A1("A1"), A2("A2"),
@@ -42,13 +42,19 @@ class Authorisation {
     private Category category;
 
     @Column(name = "data_przyznania")
-    private LocalDate from;
+    private java.sql.Date from;
 
     @Column(name = "data_wygasniecia")
-    private LocalDate to;
+    private java.sql.Date to;
 
     @ManyToOne
     @JoinColumn(name = "id_kierowcy", nullable = false)
     private Driver driver;
 
+    public Authorisation(Category category, java.sql.Date from, java.sql.Date to, Driver driver) {
+        this.category = category;
+        this.from = from;
+        this.to = to;
+        this.driver = driver;
+    }
 }

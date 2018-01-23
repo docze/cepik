@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @AllArgsConstructor
-public class InitDatabase {
+public class InitBorderGuardsDatabase {
 
     private final UserService userService;
 

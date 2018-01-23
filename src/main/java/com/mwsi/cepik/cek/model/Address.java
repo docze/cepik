@@ -1,4 +1,4 @@
-package com.mwsi.cepik.cek;
+package com.mwsi.cepik.cek.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,7 +11,7 @@ import javax.persistence.Embeddable;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-class Address {
+public class Address {
 
     @Column(name = "miasto", length = 50)
     private String city;
