@@ -15,7 +15,8 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 
     @ExceptionHandler(value = {
             UserNotFoundException.class, DriverNotFoundException.class,
-            DrivingLicenceNotFoundException.class, AuthorisationNotFoundException.class
+            DrivingLicenceNotFoundException.class, AuthorisationNotFoundException.class,
+            PenaltyPointsNotFoundException.class
     })
     protected ResponseEntity<String> handleNotFound(RestRuntimeException ex) {
         return new ResponseEntity<>(ex.getResponseMessage(), HttpStatus.NOT_FOUND);

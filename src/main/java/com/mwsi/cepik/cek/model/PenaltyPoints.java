@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.sql.Date;
 
 @Entity
 @Table(name = "punkty_karne")
@@ -19,14 +19,19 @@ public class PenaltyPoints {
     @Column(name = "id_punktow_karnych")
     private Long id;
 
-    @Column(name = "liczba")
+    @Column(name = "liczba", nullable = false)
     private int count;
 
     @Column(name = "data_przyznania")
-    private LocalDate date;
+    private java.sql.Date date;
 
     @ManyToOne
     @JoinColumn(name = "id_kierowcy", nullable = false)
     private Driver driver;
 
+    public PenaltyPoints(int count, Date date, Driver driver) {
+        this.count = count;
+        this.date = date;
+        this.driver = driver;
+    }
 }
