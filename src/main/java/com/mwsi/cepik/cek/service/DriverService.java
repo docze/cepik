@@ -5,6 +5,7 @@ import com.mwsi.cepik.cek.model.Driver;
 import com.mwsi.cepik.cek.model.form.DriverForm;
 import com.mwsi.cepik.cek.repository.DriverRepository;
 import com.mwsi.cepik.exception.DriverNotFoundException;
+import com.mwsi.cepik.exception.DuplicatedDriverException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +21,9 @@ public class DriverService {
 
     @Transactional
     public void add(DriverForm driverForm) {
+        if (isDuplicated(driverForm)) {
+            throw new DuplicatedDriverException(driverForm.getPesel());
+        }
         driverRepository.save(new Driver(driverForm));
     }
 
@@ -54,6 +58,11 @@ public class DriverService {
         dbDriver.setLastName(driverForm.getLastName());
         dbDriver.setExaminationElapseDate(driverForm.getExaminationElapseDate());
         driverRepository.save(dbDriver);
+    }
+
+    private boolean isDuplicated(DriverForm driverForm) {
+        int count = driverRepository.countByPesel(driverForm.getPesel());
+        return count != 0;
     }
 }
 

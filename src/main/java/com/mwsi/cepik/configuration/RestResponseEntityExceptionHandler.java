@@ -34,4 +34,9 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
         }
         return new ResponseEntity<>(builder.toString(), HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(value = {DuplicatedDriverException.class})
+    protected ResponseEntity<String> handleDuplicate(RestRuntimeException ex) {
+        return new ResponseEntity<>(ex.getResponseMessage(), HttpStatus.CONFLICT);
+    }
 }
