@@ -7,7 +7,7 @@ public class RestRuntimeException extends RuntimeException {
     @Getter
     private String responseMessage;
 
-    RestRuntimeException(String message, String responseMessage) {
+    public RestRuntimeException(String message, String responseMessage) {
         super(message);
         this.responseMessage = responseMessage;
     }

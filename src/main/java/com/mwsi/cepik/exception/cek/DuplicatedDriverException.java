@@ -1,4 +1,6 @@
-package com.mwsi.cepik.exception;
+package com.mwsi.cepik.exception.cek;
+
+import com.mwsi.cepik.exception.RestRuntimeException;
 
 public class DuplicatedDriverException extends RestRuntimeException {
 

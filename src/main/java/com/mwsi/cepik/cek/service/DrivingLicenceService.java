@@ -4,7 +4,8 @@ import com.mwsi.cepik.cek.model.Driver;
 import com.mwsi.cepik.cek.model.DrivingLicence;
 import com.mwsi.cepik.cek.model.form.DrivingLicenceForm;
 import com.mwsi.cepik.cek.repository.DrivingLicenceRepository;
-import com.mwsi.cepik.exception.DrivingLicenceNotFoundException;
+import com.mwsi.cepik.exception.cek.DrivingLicenceNotFoundException;
+import com.mwsi.cepik.exception.cek.DuplicatedDriverException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +22,10 @@ public class DrivingLicenceService {
 
     @Transactional
     public void add(DrivingLicenceForm drivingLicenceForm) {
+        if (isDuplicated(drivingLicenceForm)) {
+            throw new DuplicatedDriverException(drivingLicenceForm.getSequence());
+        }
+
         Driver driver = driverService.findById(drivingLicenceForm.getDriverId());
         DrivingLicence drivingLicence = new DrivingLicence(
                 drivingLicenceForm.getFrom(),
@@ -53,5 +58,10 @@ public class DrivingLicenceService {
         dbDrivingLicence.setSequence(drivingLicenceForm.getSequence());
         dbDrivingLicence.setDriver(driver);
         drivingLicenceRepository.save(dbDrivingLicence);
+    }
+
+    private boolean isDuplicated(DrivingLicenceForm drivingLicenceForm) {
+        int count = drivingLicenceRepository.countBySequence(drivingLicenceForm.getSequence());
+        return count != 0;
     }
 }

@@ -4,7 +4,7 @@ import com.mwsi.cepik.cek.model.Authorisation;
 import com.mwsi.cepik.cek.model.Driver;
 import com.mwsi.cepik.cek.model.form.AuthorisationForm;
 import com.mwsi.cepik.cek.repository.AuthorisationRepository;
-import com.mwsi.cepik.exception.AuthorisationNotFoundException;
+import com.mwsi.cepik.exception.cek.AuthorisationNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

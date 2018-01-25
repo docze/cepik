@@ -26,7 +26,7 @@ public class DrivingLicence {
     @Column(name = "data_wygasniecia", nullable = false)
     private java.sql.Date to;
 
-    @Column(name = "seria", length = 50, nullable = false)
+    @Column(name = "seria", length = 50, nullable = false, unique = true)
     private String sequence;
 
     @ManyToOne

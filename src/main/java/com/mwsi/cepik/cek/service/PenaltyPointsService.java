@@ -4,7 +4,7 @@ import com.mwsi.cepik.cek.model.Driver;
 import com.mwsi.cepik.cek.model.PenaltyPoints;
 import com.mwsi.cepik.cek.model.form.PenaltyPointsForm;
 import com.mwsi.cepik.cek.repository.PenaltyPointsRepository;
-import com.mwsi.cepik.exception.PenaltyPointsNotFoundException;
+import com.mwsi.cepik.exception.cek.PenaltyPointsNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

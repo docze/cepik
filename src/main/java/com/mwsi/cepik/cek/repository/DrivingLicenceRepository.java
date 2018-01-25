@@ -8,4 +8,6 @@ import java.util.Optional;
 public interface DrivingLicenceRepository extends JpaRepository<DrivingLicence, Long> {
 
     Optional<DrivingLicence> findById(Long id);
+
+    int countBySequence(String sequence);
 }

@@ -55,7 +55,7 @@ public class InitCEKDatabase {
             drivingLicenceList.add(new DrivingLicence(
                     Date.valueOf(LocalDate.of(2012 - (i % 6), (i % 12) + 1, (i % 26) + 1)),
                     Date.valueOf(LocalDate.of(2027 + i % 3, (i % 5) + 1, (i % 10) + 1)),
-                    "AAABB-3",
+                    "AAABB-3" + (int) (10000 + (Math.random() * 89999)),
                     driverList.get((int) (0 + (Math.random() * 49)))));
         }
 
