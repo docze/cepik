@@ -8,7 +8,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "Uprawnienia")
+@Table(name = "uprawnienie")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -38,13 +38,13 @@ public class Authorisation {
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "kategoria")
+    @Column(name = "kategoria", nullable = false)
     private Category category;
 
-    @Column(name = "data_przyznania")
+    @Column(name = "data_przyznania", nullable = false)
     private java.sql.Date from;
 
-    @Column(name = "data_wygasniecia")
+    @Column(name = "data_wygasniecia", nullable = false)
     private java.sql.Date to;
 
     @ManyToOne

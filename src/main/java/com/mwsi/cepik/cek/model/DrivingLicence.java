@@ -20,13 +20,13 @@ public class DrivingLicence {
     @Column(name = "id_prawa_jazdy")
     private Long id;
 
-    @Column(name = "data_wydania")
+    @Column(name = "data_wydania", nullable = false)
     private java.sql.Date from;
 
-    @Column(name = "data_wygasniecia")
+    @Column(name = "data_wygasniecia", nullable = false)
     private java.sql.Date to;
 
-    @Column(name = "seria", length = 50)
+    @Column(name = "seria", length = 50, nullable = false)
     private String sequence;
 
     @ManyToOne

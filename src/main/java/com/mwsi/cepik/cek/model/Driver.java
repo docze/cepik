@@ -13,7 +13,7 @@ import java.sql.Date;
 import java.util.Set;
 
 @Entity
-@Table(name = "Kierowca")
+@Table(name = "kierowca")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

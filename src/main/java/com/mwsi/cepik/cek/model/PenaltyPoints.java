@@ -22,7 +22,7 @@ public class PenaltyPoints {
     @Column(name = "liczba", nullable = false)
     private int count;
 
-    @Column(name = "data_przyznania")
+    @Column(name = "data_przyznania", nullable = false)
     private java.sql.Date date;
 
     @ManyToOne
