@@ -1,5 +1,6 @@
 package com.mwsi.cepik.configuration;
 
+import com.mwsi.cepik.exception.DuplicatedUserException;
 import com.mwsi.cepik.exception.FormValidationException;
 import com.mwsi.cepik.exception.RestRuntimeException;
 import com.mwsi.cepik.exception.UserNotFoundException;
@@ -38,7 +39,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
         return new ResponseEntity<>(builder.toString(), HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(value = {DuplicatedDriverException.class, DuplicatedDrivingLicenceException.class})
+    @ExceptionHandler(value = {DuplicatedDriverException.class, DuplicatedDrivingLicenceException.class, DuplicatedUserException.class})
     protected ResponseEntity<String> handleDuplicate(RestRuntimeException ex) {
         return new ResponseEntity<>(ex.getResponseMessage(), HttpStatus.CONFLICT);
     }
