@@ -1,10 +1,14 @@
 package com.mwsi.cepik.cep.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "pojazd")
@@ -18,28 +22,24 @@ public class Vehicle {
     @Column(name = "id_pojazdu")
     private Long id;
 
-    @Column(name = "marka", nullable = false)
-    @Enumerated(EnumType.STRING)
-    private CarBrand brand;
-
-    @Column(name = "model", nullable = false)
-    @Enumerated(EnumType.STRING)
+    @ManyToOne
+    @JoinColumn(name = "id_modelu", nullable = false)
     private CarModel model;
 
     @Column(name = "rok_produkcji", nullable = false, length = 4)
     private String productionYear;
 
-    @Column(name = "vin", nullable = false, length = 17)
+    @Column(name = "vin", nullable = false, length = 17, unique = true)
     private String vin;
 
-    @Column(name = "numer_silnika", nullable = false)
+    @Column(name = "numer_silnika", nullable = false, unique = true)
     private String engineNumber;
 
-    @Column(name = "moc_silnika", nullable = false)
+    @Column(name = "moc_silnika_KM", nullable = false)
     private int enginePower;
 
     @Column(name = "pojemnosc_silnika", nullable = false)
-    private float engineCapacity;
+    private double engineCapacity;
 
     @Column(name = "liczba_miejsc", nullable = false)
     private int numberOfSeats;
@@ -58,4 +58,17 @@ public class Vehicle {
 
     @Column(name = "uprzywilejowany", nullable = false)
     private boolean privileged;
+
+    @Column(name = "data_waznosci_badania")
+    private java.sql.Date servicingDate;
+
+    @OneToMany(mappedBy = "vehicle")
+    @JsonIgnore
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Set<RegistrationNumber> registrationNumberSet;
+
+    @OneToMany(mappedBy = "carOwner")
+    @JsonIgnore
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Set<OCInsurance> ocInsuranceSet;
 }

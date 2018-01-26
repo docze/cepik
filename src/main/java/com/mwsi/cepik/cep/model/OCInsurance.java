@@ -24,10 +24,15 @@ public class OCInsurance {
     @Column(name = "data_wygasniecia", nullable = false)
     private java.sql.Date to;
 
-    @Column(name = "numer_polisy", nullable = false)
-    private String policyNumber;
+    @Column(name = "numer_i_PIN_polisy", nullable = false, unique = true)
+    private String policyNumberAndPIN;
 
-    @Column(name = "PIN_polisy", nullable = false)
-    private String policyPIN;
+    @ManyToOne
+    @JoinColumn(name = "id_wlasciciela", nullable = false)
+    private CarOwner carOwner;
+
+    @ManyToOne
+    @JoinColumn(name = "id_pojazdu", nullable = false)
+    private Vehicle vehicle;
 
 }

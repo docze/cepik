@@ -1,18 +1,34 @@
 package com.mwsi.cepik.cep.model;
 
-import static com.mwsi.cepik.cep.model.CarBrand.AUDI;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-public enum CarModel {
-    A5(AUDI), A4(AUDI);
+import javax.persistence.*;
+import java.util.Set;
 
-    CarModel(CarBrand carBrand) {
-        this.carBrand = carBrand;
-    }
+@Entity
+@Table(name = "model")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class CarModel {
 
-    private CarBrand carBrand;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id_modelu")
+    private Long id;
 
-    @Override
-    public String toString() {
-        return this.name();
+    @Column(name = "model", nullable = false, length = 50)
+    private String model;
+
+    @ManyToOne
+    @JoinColumn(name = "id_marki", nullable = false)
+    private CarBrand brand;
+
+    public CarModel(CarBrand brand, String model) {
+        this.model = model;
+        this.brand = brand;
     }
 }
