@@ -22,7 +22,4 @@ public class RegistrationDocumentForm {
 
     @NotNull
     private java.sql.Date to;
-
-    // TODO: co z carOwnerSet ManyToMany ??
-
 }

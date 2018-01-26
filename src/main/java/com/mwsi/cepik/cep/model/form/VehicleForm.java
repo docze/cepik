@@ -34,16 +34,22 @@ public class VehicleForm {
     @NotNull
     private int numberOfSeats;
 
+    @NotNull
     private java.sql.Date firstRegistrationDate;
 
+    @NotNull
     private int curbWeight;
 
+    @NotNull
     private int permissibleLadenMass;
 
+    @NotNull
     private int numberOfAxies;
 
+    @NotNull
     private boolean privileged;
 
+    @NotNull
     private java.sql.Date servicingDate;
 
 }

@@ -24,7 +24,7 @@ public class UserService implements UserDetailsService {
     @Transactional
     public User add(UserForm userForm) {
         if (isDuplicated(userForm)) {
-            throw new DuplicatedUserException(userForm.getEmail());
+            throw new DuplicatedUserException(userForm.getEmail(), userForm.getName());
         }
         User user = new User();
         user.setName(userForm.getName());
@@ -34,7 +34,7 @@ public class UserService implements UserDetailsService {
     }
 
     private boolean isDuplicated(UserForm userForm) {
-        int count = userRepository.countByEmail(userForm.getEmail());
+        int count = userRepository.countByEmailOrName(userForm.getEmail(), userForm.getName());
         return count != 0;
     }
 
