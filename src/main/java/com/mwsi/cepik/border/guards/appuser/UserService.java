@@ -1,5 +1,6 @@
 package com.mwsi.cepik.border.guards.appuser;
 
+import com.mwsi.cepik.exception.DuplicatedUserException;
 import com.mwsi.cepik.exception.UserNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,12 +22,20 @@ public class UserService implements UserDetailsService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Transactional
-    public void add(UserForm userForm) {
+    public User add(UserForm userForm) {
+        if (isDuplicated(userForm)) {
+            throw new DuplicatedUserException(userForm.getEmail());
+        }
         User user = new User();
         user.setName(userForm.getName());
         user.setEmail(userForm.getEmail());
         user.setPassword(encodePassword(userForm.getPassword()));
-        userRepository.save(user);
+        return userRepository.save(user);
+    }
+
+    private boolean isDuplicated(UserForm userForm) {
+        int count = userRepository.countByEmail(userForm.getEmail());
+        return count != 0;
     }
 
     @Override
