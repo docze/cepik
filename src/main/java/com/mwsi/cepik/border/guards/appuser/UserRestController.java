@@ -28,12 +28,12 @@ public class UserRestController {
     }
 
     @PostMapping
-    public ResponseEntity add(@RequestBody @Valid UserForm userForm, BindingResult bindingResult) {
+    public ResponseEntity<User> add(@RequestBody @Valid UserForm userForm, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new FormValidationException(bindingResult.getFieldErrors());
         }
-        userService.add(userForm);
-        return new ResponseEntity(HttpStatus.OK);
+        User user = userService.add(userForm);
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
