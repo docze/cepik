@@ -5,6 +5,7 @@ import com.mwsi.cepik.exception.FormValidationException;
 import com.mwsi.cepik.exception.RestRuntimeException;
 import com.mwsi.cepik.exception.UserNotFoundException;
 import com.mwsi.cepik.exception.cek.*;
+import com.mwsi.cepik.exception.cep.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -20,7 +21,10 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     @ExceptionHandler(value = {
             UserNotFoundException.class, DriverNotFoundException.class,
             DrivingLicenceNotFoundException.class, AuthorisationNotFoundException.class,
-            PenaltyPointsNotFoundException.class
+            PenaltyPointsNotFoundException.class, CarBrandNotFoundException.class,
+            CarModelNotFoundException.class, CarOwnerNotFoundException.class,
+            OCInsuranceNotFoundException.class, RegistrationDocumentNotFoundException.class,
+            RegistrationNumberNotFoundException.class, VehicleNotFoundException.class
     })
     protected ResponseEntity<String> handleNotFound(RestRuntimeException ex) {
         return new ResponseEntity<>(ex.getResponseMessage(), HttpStatus.NOT_FOUND);
@@ -39,7 +43,13 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
         return new ResponseEntity<>(builder.toString(), HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(value = {DuplicatedDriverException.class, DuplicatedDrivingLicenceException.class, DuplicatedUserException.class})
+    @ExceptionHandler(value = {
+            DuplicatedDriverException.class, DuplicatedDrivingLicenceException.class,
+            DuplicatedUserException.class, DuplicatedCarBrandException.class,
+            DuplicatedCarModelException.class, DuplicatedCarOwnerException.class,
+            DuplicatedOCInsuranceException.class, DuplicatedRegistrationDocumentException.class,
+            DuplicatedRegistrationNumberException.class, DuplicatedVehicleException.class
+    })
     protected ResponseEntity<String> handleDuplicate(RestRuntimeException ex) {
         return new ResponseEntity<>(ex.getResponseMessage(), HttpStatus.CONFLICT);
     }

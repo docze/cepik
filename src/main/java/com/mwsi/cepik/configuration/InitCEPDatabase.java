@@ -108,7 +108,7 @@ public class InitCEPDatabase {
             LocalDate end = start.plusYears(1);
             ocInsurance.setFrom(Date.valueOf(start));
             ocInsurance.setTo(Date.valueOf(end));
-            ocInsurance.setPolicyNumberAndPIN("JHJS434/" + (int) (10000 + (Math.random() * 89999)));
+            ocInsurance.setPolicyNumberWithPIN("JHJS434/" + (int) (10000 + (Math.random() * 89999)));
             ocInsurance.setCarOwner(carOwnerList.get(i));
             ocInsurance.setVehicle(vehicleList.get(i));
             ocInsuranceList.add(ocInsurance);

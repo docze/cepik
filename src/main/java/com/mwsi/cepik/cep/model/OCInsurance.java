@@ -25,7 +25,7 @@ public class OCInsurance {
     private java.sql.Date to;
 
     @Column(name = "numer_i_PIN_polisy", nullable = false, unique = true)
-    private String policyNumberAndPIN;
+    private String policyNumberWithPIN;
 
     @ManyToOne
     @JoinColumn(name = "id_wlasciciela", nullable = false)

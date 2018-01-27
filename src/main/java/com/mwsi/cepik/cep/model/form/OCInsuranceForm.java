@@ -19,7 +19,7 @@ public class OCInsuranceForm {
     private java.sql.Date to;
 
     @NotEmpty
-    private String policyNumberAndPIN;
+    private String policyNumberWithPIN;
 
     @NotNull
     private Long carOwnerId;
