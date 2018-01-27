@@ -31,26 +31,24 @@ public class VehicleRestController {
     }
 
     @PostMapping
-    public ResponseEntity add(@RequestBody @Valid VehicleForm vehicleForm, BindingResult bindingResult) {
+    public ResponseEntity<Vehicle> add(@RequestBody @Valid VehicleForm vehicleForm, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new FormValidationException(bindingResult.getFieldErrors());
         }
-        vehicleService.add(vehicleForm);
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity<>(vehicleService.add(vehicleForm), HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity update(@RequestBody @Valid VehicleForm vehicleForm, @PathVariable Long id, BindingResult bindingResult) {
+    public ResponseEntity<Vehicle> update(@RequestBody @Valid VehicleForm vehicleForm, @PathVariable Long id, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new FormValidationException(bindingResult.getFieldErrors());
         }
-        vehicleService.update(vehicleForm, id);
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity<>(vehicleService.update(vehicleForm, id), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity delete(@PathVariable Long id) {
         vehicleService.delete(id);
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity<>("Successfully deleted", HttpStatus.OK);
     }
 }

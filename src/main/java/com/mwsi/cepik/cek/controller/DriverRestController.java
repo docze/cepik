@@ -31,26 +31,24 @@ public class DriverRestController {
     }
 
     @PostMapping
-    public ResponseEntity add(@RequestBody @Valid DriverForm driverForm, BindingResult bindingResult) {
+    public ResponseEntity<Driver> add(@RequestBody @Valid DriverForm driverForm, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new FormValidationException(bindingResult.getFieldErrors());
         }
-        driverService.add(driverForm);
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity<>(driverService.add(driverForm), HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity update(@RequestBody @Valid DriverForm driverForm, @PathVariable Long id, BindingResult bindingResult) {
+    public ResponseEntity<Driver> update(@RequestBody @Valid DriverForm driverForm, @PathVariable Long id, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new FormValidationException(bindingResult.getFieldErrors());
         }
-        driverService.update(driverForm, id);
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity<>(driverService.update(driverForm, id), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity delete(@PathVariable Long id) {
         driverService.delete(id);
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity<>("Successfully deleted", HttpStatus.OK);
     }
 }

@@ -21,7 +21,7 @@ public class RegistrationDocumentService {
     private final VehicleService vehicleService;
 
     @Transactional
-    public void add(RegistrationDocumentForm registrationDocumentForm) {
+    public RegistrationDocument add(RegistrationDocumentForm registrationDocumentForm) {
         if (isDuplicated(registrationDocumentForm)) {
             throw new DuplicatedRegistrationDocumentException(registrationDocumentForm.getSequence());
         }
@@ -30,7 +30,7 @@ public class RegistrationDocumentService {
         registrationDocument.setSequence(registrationDocumentForm.getSequence());
         registrationDocument.setTo(registrationDocumentForm.getTo());
         registrationDocument.setVehicle(vehicle);
-        registrationDocumentRepository.save(registrationDocument);
+        return registrationDocumentRepository.save(registrationDocument);
     }
 
     public RegistrationDocument findById(Long id) {
@@ -47,13 +47,13 @@ public class RegistrationDocumentService {
     }
 
     @Transactional
-    public void update(RegistrationDocumentForm registrationDocumentForm, Long id) {
+    public RegistrationDocument update(RegistrationDocumentForm registrationDocumentForm, Long id) {
         Vehicle vehicle = vehicleService.findById(registrationDocumentForm.getVehicleId());
         RegistrationDocument dbRegistrationDocument = findById(id);
         dbRegistrationDocument.setSequence(registrationDocumentForm.getSequence());
         dbRegistrationDocument.setTo(registrationDocumentForm.getTo());
         dbRegistrationDocument.setVehicle(vehicle);
-        registrationDocumentRepository.save(dbRegistrationDocument);
+        return registrationDocumentRepository.save(dbRegistrationDocument);
     }
 
     private boolean isDuplicated(RegistrationDocumentForm registrationDocumentForm) {

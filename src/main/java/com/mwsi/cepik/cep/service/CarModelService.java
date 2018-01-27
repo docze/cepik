@@ -21,7 +21,7 @@ public class CarModelService {
     private final CarBrandService carBrandService;
 
     @Transactional
-    public void add(CarModelForm carModelForm) {
+    public CarModel add(CarModelForm carModelForm) {
         if (isDuplicated(carModelForm)) {
             throw new DuplicatedCarModelException(carModelForm.getModel());
         }
@@ -29,7 +29,7 @@ public class CarModelService {
         CarModel carModel = new CarModel();
         carModel.setModel(carModelForm.getModel());
         carModel.setBrand(carBrand);
-        carModelRepository.save(carModel);
+        return carModelRepository.save(carModel);
     }
 
     public CarModel findById(Long id) {
@@ -46,12 +46,12 @@ public class CarModelService {
     }
 
     @Transactional
-    public void update(CarModelForm carModelForm, Long id) {
+    public CarModel update(CarModelForm carModelForm, Long id) {
         CarBrand carBrand = carBrandService.findById(carModelForm.getCarBrandId());
         CarModel dbCarModel = findById(id);
         dbCarModel.setModel(carModelForm.getModel());
         dbCarModel.setBrand(carBrand);
-        carModelRepository.save(dbCarModel);
+        return carModelRepository.save(dbCarModel);
     }
 
     private boolean isDuplicated(CarModelForm carModelForm) {

@@ -21,7 +21,7 @@ public class VehicleService {
     private final CarModelService carModelService;
 
     @Transactional
-    public void add(VehicleForm vehicleForm) {
+    public Vehicle add(VehicleForm vehicleForm) {
         if (isDuplicated(vehicleForm)) {
             throw new DuplicatedVehicleException(vehicleForm.getVin(), vehicleForm.getEngineNumber());
         }
@@ -40,7 +40,7 @@ public class VehicleService {
         vehicle.setNumberOfAxies(vehicleForm.getNumberOfAxies());
         vehicle.setPrivileged(vehicleForm.isPrivileged());
         vehicle.setServicingDate(vehicleForm.getServicingDate());
-        vehicleRepository.save(vehicle);
+        return vehicleRepository.save(vehicle);
     }
 
     public Vehicle findById(Long id) {
@@ -57,7 +57,7 @@ public class VehicleService {
     }
 
     @Transactional
-    public void update(VehicleForm vehicleForm, Long id) {
+    public Vehicle update(VehicleForm vehicleForm, Long id) {
         CarModel carModel = carModelService.findById(vehicleForm.getCarModelId());
         Vehicle dbVehicle = findById(id);
         dbVehicle.setModel(carModel);
@@ -73,7 +73,7 @@ public class VehicleService {
         dbVehicle.setNumberOfAxies(vehicleForm.getNumberOfAxies());
         dbVehicle.setPrivileged(vehicleForm.isPrivileged());
         dbVehicle.setServicingDate(vehicleForm.getServicingDate());
-        vehicleRepository.save(dbVehicle);
+        return vehicleRepository.save(dbVehicle);
     }
 
     private boolean isDuplicated(VehicleForm vehicleForm) {

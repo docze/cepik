@@ -20,13 +20,13 @@ public class PenaltyPointsService {
     private final DriverService driverService;
 
     @Transactional
-    public void add(PenaltyPointsForm penaltyPointsForm) {
+    public PenaltyPoints add(PenaltyPointsForm penaltyPointsForm) {
         Driver driver = driverService.findById(penaltyPointsForm.getDriverId());
         PenaltyPoints penaltyPoints = new PenaltyPoints();
         penaltyPoints.setCount(penaltyPointsForm.getCount());
         penaltyPoints.setDate(penaltyPointsForm.getDate());
         penaltyPoints.setDriver(driver);
-        penaltyPointsRepository.save(penaltyPoints);
+        return penaltyPointsRepository.save(penaltyPoints);
     }
 
     public PenaltyPoints findById(Long id) {
@@ -43,12 +43,12 @@ public class PenaltyPointsService {
     }
 
     @Transactional
-    public void update(PenaltyPointsForm penaltyPointsForm, Long id) {
+    public PenaltyPoints update(PenaltyPointsForm penaltyPointsForm, Long id) {
         Driver driver = driverService.findById(penaltyPointsForm.getDriverId());
         PenaltyPoints dbPenaltyPoints = findById(id);
         dbPenaltyPoints.setCount(penaltyPointsForm.getCount());
         dbPenaltyPoints.setDate(penaltyPointsForm.getDate());
         dbPenaltyPoints.setDriver(driver);
-        penaltyPointsRepository.save(dbPenaltyPoints);
+        return penaltyPointsRepository.save(dbPenaltyPoints);
     }
 }

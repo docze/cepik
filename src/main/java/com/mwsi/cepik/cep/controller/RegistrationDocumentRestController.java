@@ -31,26 +31,24 @@ public class RegistrationDocumentRestController {
     }
 
     @PostMapping
-    public ResponseEntity add(@RequestBody @Valid RegistrationDocumentForm registrationDocumentForm, BindingResult bindingResult) {
+    public ResponseEntity<RegistrationDocument> add(@RequestBody @Valid RegistrationDocumentForm registrationDocumentForm, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new FormValidationException(bindingResult.getFieldErrors());
         }
-        registrationDocumentService.add(registrationDocumentForm);
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity<>(registrationDocumentService.add(registrationDocumentForm), HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity update(@RequestBody @Valid RegistrationDocumentForm registrationDocumentForm, @PathVariable Long id, BindingResult bindingResult) {
+    public ResponseEntity<RegistrationDocument> update(@RequestBody @Valid RegistrationDocumentForm registrationDocumentForm, @PathVariable Long id, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new FormValidationException(bindingResult.getFieldErrors());
         }
-        registrationDocumentService.update(registrationDocumentForm, id);
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity<>(registrationDocumentService.update(registrationDocumentForm, id), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity delete(@PathVariable Long id) {
         registrationDocumentService.delete(id);
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity<>("Successfully deleted", HttpStatus.OK);
     }
 }

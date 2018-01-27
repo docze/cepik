@@ -24,7 +24,7 @@ public class CarOwnerService {
     private final RegistrationDocumentService registrationDocumentService;
 
     @Transactional
-    public void add(CarOwnerForm carOwnerForm) {
+    public CarOwner add(CarOwnerForm carOwnerForm) {
         if (isDuplicated(carOwnerForm)) {
             throw new DuplicatedCarOwnerException(carOwnerForm.getPesel(), carOwnerForm.getRegon());
         }
@@ -44,7 +44,7 @@ public class CarOwnerService {
                 .map(registrationDocumentService::findById)
                 .collect(Collectors.toList());
         carOwner.setRegistrationDocumentList(registrationDocumentList);
-        carOwnerRepository.save(carOwner);
+        return carOwnerRepository.save(carOwner);
     }
 
     public CarOwner findById(Long id) {
@@ -61,7 +61,7 @@ public class CarOwnerService {
     }
 
     @Transactional
-    public void update(CarOwnerForm carOwnerForm, Long id) {
+    public CarOwner update(CarOwnerForm carOwnerForm, Long id) {
         Address address = new Address(
                 carOwnerForm.getCity(), carOwnerForm.getZipCode(),
                 carOwnerForm.getStreet(), carOwnerForm.getHouseNumber(),
@@ -78,7 +78,7 @@ public class CarOwnerService {
                 .map(registrationDocumentService::findById)
                 .collect(Collectors.toList());
         dbCarOwner.setRegistrationDocumentList(registrationDocumentList);
-        carOwnerRepository.save(dbCarOwner);
+        return carOwnerRepository.save(dbCarOwner);
     }
 
     private boolean isDuplicated(CarOwnerForm carOwnerForm) {

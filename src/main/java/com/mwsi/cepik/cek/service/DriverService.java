@@ -20,11 +20,11 @@ public class DriverService {
     private final DriverRepository driverRepository;
 
     @Transactional
-    public void add(DriverForm driverForm) {
+    public Driver add(DriverForm driverForm) {
         if (isDuplicated(driverForm)) {
             throw new DuplicatedDriverException(driverForm.getPesel());
         }
-        driverRepository.save(new Driver(driverForm));
+        return driverRepository.save(new Driver(driverForm));
     }
 
     public Driver findById(Long id) {
@@ -45,7 +45,7 @@ public class DriverService {
     }
 
     @Transactional
-    public void update(DriverForm driverForm, Long id) {
+    public Driver update(DriverForm driverForm, Long id) {
         Address address = new Address(
                 driverForm.getCity(), driverForm.getZipCode(),
                 driverForm.getStreet(), driverForm.getHouseNumber(),
@@ -57,7 +57,7 @@ public class DriverService {
         dbDriver.setFirstName(driverForm.getFirstName());
         dbDriver.setLastName(driverForm.getLastName());
         dbDriver.setExaminationElapseDate(driverForm.getExaminationElapseDate());
-        driverRepository.save(dbDriver);
+        return driverRepository.save(dbDriver);
     }
 
     private boolean isDuplicated(DriverForm driverForm) {

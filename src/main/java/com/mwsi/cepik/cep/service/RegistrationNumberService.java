@@ -21,7 +21,7 @@ public class RegistrationNumberService {
     private final VehicleService vehicleService;
 
     @Transactional
-    public void add(RegistrationNumberForm registrationNumberForm) {
+    public RegistrationNumber add(RegistrationNumberForm registrationNumberForm) {
         if (isDuplicated(registrationNumberForm)) {
             throw new DuplicatedRegistrationNumberException(registrationNumberForm.getRegistrationNumber());
         }
@@ -30,7 +30,7 @@ public class RegistrationNumberService {
         registrationNumber.setRegistrationNumber(registrationNumberForm.getRegistrationNumber());
         registrationNumber.setActual(registrationNumberForm.isActual());
         registrationNumber.setVehicle(vehicle);
-        registrationNumberRepository.save(registrationNumber);
+        return registrationNumberRepository.save(registrationNumber);
     }
 
     public RegistrationNumber findById(Long id) {
@@ -47,13 +47,13 @@ public class RegistrationNumberService {
     }
 
     @Transactional
-    public void update(RegistrationNumberForm registrationNumberForm, Long id) {
+    public RegistrationNumber update(RegistrationNumberForm registrationNumberForm, Long id) {
         Vehicle vehicle = vehicleService.findById(registrationNumberForm.getVehicleId());
         RegistrationNumber dbRegistrationNumber = findById(id);
         dbRegistrationNumber.setRegistrationNumber(registrationNumberForm.getRegistrationNumber());
         dbRegistrationNumber.setActual(registrationNumberForm.isActual());
         dbRegistrationNumber.setVehicle(vehicle);
-        registrationNumberRepository.save(dbRegistrationNumber);
+        return registrationNumberRepository.save(dbRegistrationNumber);
     }
 
     private boolean isDuplicated(RegistrationNumberForm registrationNumberForm) {

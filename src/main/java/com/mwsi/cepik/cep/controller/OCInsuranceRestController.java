@@ -31,26 +31,24 @@ public class OCInsuranceRestController {
     }
 
     @PostMapping
-    public ResponseEntity add(@RequestBody @Valid OCInsuranceForm ocInsuranceForm, BindingResult bindingResult) {
+    public ResponseEntity<OCInsurance> add(@RequestBody @Valid OCInsuranceForm ocInsuranceForm, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new FormValidationException(bindingResult.getFieldErrors());
         }
-        ocInsuranceService.add(ocInsuranceForm);
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity<>(ocInsuranceService.add(ocInsuranceForm), HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity update(@RequestBody @Valid OCInsuranceForm ocInsuranceForm, @PathVariable Long id, BindingResult bindingResult) {
+    public ResponseEntity<OCInsurance> update(@RequestBody @Valid OCInsuranceForm ocInsuranceForm, @PathVariable Long id, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new FormValidationException(bindingResult.getFieldErrors());
         }
-        ocInsuranceService.update(ocInsuranceForm, id);
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity<>(ocInsuranceService.update(ocInsuranceForm, id), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity delete(@PathVariable Long id) {
         ocInsuranceService.delete(id);
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity<>("Successfully deleted", HttpStatus.OK);
     }
 }

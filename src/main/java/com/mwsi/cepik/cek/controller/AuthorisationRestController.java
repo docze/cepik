@@ -31,26 +31,24 @@ public class AuthorisationRestController {
     }
 
     @PostMapping
-    public ResponseEntity add(@RequestBody @Valid AuthorisationForm authorisationForm, BindingResult bindingResult) {
+    public ResponseEntity<Authorisation> add(@RequestBody @Valid AuthorisationForm authorisationForm, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new FormValidationException(bindingResult.getFieldErrors());
         }
-        authorisationService.add(authorisationForm);
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity<>(authorisationService.add(authorisationForm), HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity update(@RequestBody @Valid AuthorisationForm authorisationForm, @PathVariable Long id, BindingResult bindingResult) {
+    public ResponseEntity<Authorisation> update(@RequestBody @Valid AuthorisationForm authorisationForm, @PathVariable Long id, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new FormValidationException(bindingResult.getFieldErrors());
         }
-        authorisationService.update(authorisationForm, id);
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity<>(authorisationService.update(authorisationForm, id), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity delete(@PathVariable Long id) {
         authorisationService.delete(id);
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity<>("Successfully deleted", HttpStatus.OK);
     }
 }

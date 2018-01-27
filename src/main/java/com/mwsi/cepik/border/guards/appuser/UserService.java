@@ -58,12 +58,12 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional
-    void update(UserForm userForm, Integer id) {
+    User update(UserForm userForm, Integer id) {
         User dbUser = findById(id);
         dbUser.setEmail(userForm.getEmail());
         dbUser.setName(userForm.getName());
         dbUser.setPassword(encodePassword(userForm.getPassword()));
-        userRepository.save(dbUser);
+        return userRepository.save(dbUser);
     }
 
     @Transactional

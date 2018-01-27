@@ -23,7 +23,7 @@ public class OCInsuranceService {
     private final VehicleService vehicleService;
 
     @Transactional
-    public void add(OCInsuranceForm ocInsuranceForm) {
+    public OCInsurance add(OCInsuranceForm ocInsuranceForm) {
         if (isDuplicated(ocInsuranceForm)) {
             throw new DuplicatedOCInsuranceException(ocInsuranceForm.getPolicyNumberWithPIN());
         }
@@ -35,7 +35,7 @@ public class OCInsuranceService {
         ocInsurance.setPolicyNumberWithPIN(ocInsuranceForm.getPolicyNumberWithPIN());
         ocInsurance.setFrom(ocInsuranceForm.getFrom());
         ocInsurance.setTo(ocInsuranceForm.getTo());
-        ocInsuranceRepository.save(ocInsurance);
+        return ocInsuranceRepository.save(ocInsurance);
     }
 
     public OCInsurance findById(Long id) {
@@ -52,7 +52,7 @@ public class OCInsuranceService {
     }
 
     @Transactional
-    public void update(OCInsuranceForm ocInsuranceForm, Long id) {
+    public OCInsurance update(OCInsuranceForm ocInsuranceForm, Long id) {
         CarOwner carOwner = carOwnerService.findById(ocInsuranceForm.getCarOwnerId());
         Vehicle vehicle = vehicleService.findById(ocInsuranceForm.getVehicleId());
         OCInsurance dbOCInsurance = findById(id);
@@ -61,7 +61,7 @@ public class OCInsuranceService {
         dbOCInsurance.setPolicyNumberWithPIN(ocInsuranceForm.getPolicyNumberWithPIN());
         dbOCInsurance.setFrom(ocInsuranceForm.getFrom());
         dbOCInsurance.setTo(ocInsuranceForm.getTo());
-        ocInsuranceRepository.save(dbOCInsurance);
+        return ocInsuranceRepository.save(dbOCInsurance);
     }
 
     private boolean isDuplicated(OCInsuranceForm ocInsuranceForm) {

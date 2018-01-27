@@ -32,22 +32,20 @@ public class UserRestController {
         if (bindingResult.hasErrors()) {
             throw new FormValidationException(bindingResult.getFieldErrors());
         }
-        User user = userService.add(userForm);
-        return new ResponseEntity<>(user, HttpStatus.OK);
+        return new ResponseEntity<>(userService.add(userForm), HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity update(@RequestBody @Valid UserForm userForm, BindingResult bindingResult, @PathVariable Integer id) {
+    public ResponseEntity<User> update(@RequestBody @Valid UserForm userForm, BindingResult bindingResult, @PathVariable Integer id) {
         if (bindingResult.hasErrors()) {
             throw new FormValidationException(bindingResult.getFieldErrors());
         }
-        userService.update(userForm, id);
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity<>(userService.update(userForm, id), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity delete(@PathVariable Integer id) {
         userService.delete(id);
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity<>("Successfully deleted", HttpStatus.OK);
     }
 }

@@ -31,26 +31,24 @@ public class DrivingLicenceRestController {
     }
 
     @PostMapping
-    public ResponseEntity add(@RequestBody @Valid DrivingLicenceForm drivingLicenceForm, BindingResult bindingResult) {
+    public ResponseEntity<DrivingLicence> add(@RequestBody @Valid DrivingLicenceForm drivingLicenceForm, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new FormValidationException(bindingResult.getFieldErrors());
         }
-        drivingLicenceService.add(drivingLicenceForm);
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity<>(drivingLicenceService.add(drivingLicenceForm), HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity update(@RequestBody @Valid DrivingLicenceForm drivingLicenceForm, @PathVariable Long id, BindingResult bindingResult) {
+    public ResponseEntity<DrivingLicence> update(@RequestBody @Valid DrivingLicenceForm drivingLicenceForm, @PathVariable Long id, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new FormValidationException(bindingResult.getFieldErrors());
         }
-        drivingLicenceService.update(drivingLicenceForm, id);
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity<>(drivingLicenceService.update(drivingLicenceForm, id), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity delete(@PathVariable Long id) {
         drivingLicenceService.delete(id);
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity<>("Successfully deleted", HttpStatus.OK);
     }
 }

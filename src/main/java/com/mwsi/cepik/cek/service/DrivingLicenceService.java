@@ -21,7 +21,7 @@ public class DrivingLicenceService {
     private final DriverService driverService;
 
     @Transactional
-    public void add(DrivingLicenceForm drivingLicenceForm) {
+    public DrivingLicence add(DrivingLicenceForm drivingLicenceForm) {
         if (isDuplicated(drivingLicenceForm)) {
             throw new DuplicatedDriverException(drivingLicenceForm.getSequence());
         }
@@ -33,7 +33,7 @@ public class DrivingLicenceService {
                 drivingLicenceForm.getSequence(),
                 driver
         );
-        drivingLicenceRepository.save(drivingLicence);
+        return drivingLicenceRepository.save(drivingLicence);
     }
 
     public DrivingLicence findById(Long id) {
@@ -50,14 +50,14 @@ public class DrivingLicenceService {
     }
 
     @Transactional
-    public void update(DrivingLicenceForm drivingLicenceForm, Long id) {
+    public DrivingLicence update(DrivingLicenceForm drivingLicenceForm, Long id) {
         Driver driver = driverService.findById(drivingLicenceForm.getDriverId());
         DrivingLicence dbDrivingLicence = drivingLicenceRepository.getOne(id);
         dbDrivingLicence.setFrom(drivingLicenceForm.getFrom());
         dbDrivingLicence.setTo(drivingLicenceForm.getTo());
         dbDrivingLicence.setSequence(drivingLicenceForm.getSequence());
         dbDrivingLicence.setDriver(driver);
-        drivingLicenceRepository.save(dbDrivingLicence);
+        return drivingLicenceRepository.save(dbDrivingLicence);
     }
 
     private boolean isDuplicated(DrivingLicenceForm drivingLicenceForm) {

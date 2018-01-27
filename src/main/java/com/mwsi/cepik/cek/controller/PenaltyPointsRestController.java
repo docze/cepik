@@ -31,26 +31,24 @@ public class PenaltyPointsRestController {
     }
 
     @PostMapping
-    public ResponseEntity add(@RequestBody @Valid PenaltyPointsForm penaltyPointsForm, BindingResult bindingResult) {
+    public ResponseEntity<PenaltyPoints> add(@RequestBody @Valid PenaltyPointsForm penaltyPointsForm, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new FormValidationException(bindingResult.getFieldErrors());
         }
-        penaltyPointsService.add(penaltyPointsForm);
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity<>(penaltyPointsService.add(penaltyPointsForm), HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity update(@RequestBody @Valid PenaltyPointsForm penaltyPointsForm, @PathVariable Long id, BindingResult bindingResult) {
+    public ResponseEntity<PenaltyPoints> update(@RequestBody @Valid PenaltyPointsForm penaltyPointsForm, @PathVariable Long id, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new FormValidationException(bindingResult.getFieldErrors());
         }
-        penaltyPointsService.update(penaltyPointsForm, id);
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity<>(penaltyPointsService.update(penaltyPointsForm, id), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity delete(@PathVariable Long id) {
         penaltyPointsService.delete(id);
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity<>("Successfully deleted", HttpStatus.OK);
     }
 }

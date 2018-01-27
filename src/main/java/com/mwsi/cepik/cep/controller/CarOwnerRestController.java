@@ -31,26 +31,24 @@ public class CarOwnerRestController {
     }
 
     @PostMapping
-    public ResponseEntity add(@RequestBody @Valid CarOwnerForm carOwnerForm, BindingResult bindingResult) {
+    public ResponseEntity<CarOwner> add(@RequestBody @Valid CarOwnerForm carOwnerForm, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new FormValidationException(bindingResult.getFieldErrors());
         }
-        carOwnerService.add(carOwnerForm);
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity<>(carOwnerService.add(carOwnerForm), HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity update(@RequestBody @Valid CarOwnerForm carOwnerForm, @PathVariable Long id, BindingResult bindingResult) {
+    public ResponseEntity<CarOwner> update(@RequestBody @Valid CarOwnerForm carOwnerForm, @PathVariable Long id, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new FormValidationException(bindingResult.getFieldErrors());
         }
-        carOwnerService.update(carOwnerForm, id);
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity<>(carOwnerService.update(carOwnerForm, id), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity delete(@PathVariable Long id) {
         carOwnerService.delete(id);
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity<>("Successfully deleted", HttpStatus.OK);
     }
 }

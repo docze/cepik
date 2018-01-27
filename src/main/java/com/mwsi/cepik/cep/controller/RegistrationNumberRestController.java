@@ -31,26 +31,24 @@ public class RegistrationNumberRestController {
     }
 
     @PostMapping
-    public ResponseEntity add(@RequestBody @Valid RegistrationNumberForm registrationNumberForm, BindingResult bindingResult) {
+    public ResponseEntity<RegistrationNumber> add(@RequestBody @Valid RegistrationNumberForm registrationNumberForm, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new FormValidationException(bindingResult.getFieldErrors());
         }
-        registrationNumberService.add(registrationNumberForm);
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity<>(registrationNumberService.add(registrationNumberForm), HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity update(@RequestBody @Valid RegistrationNumberForm registrationNumberForm, @PathVariable Long id, BindingResult bindingResult) {
+    public ResponseEntity<RegistrationNumber> update(@RequestBody @Valid RegistrationNumberForm registrationNumberForm, @PathVariable Long id, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new FormValidationException(bindingResult.getFieldErrors());
         }
-        registrationNumberService.update(registrationNumberForm, id);
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity<>(registrationNumberService.update(registrationNumberForm, id), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity delete(@PathVariable Long id) {
         registrationNumberService.delete(id);
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity<>("Successfully deleted", HttpStatus.OK);
     }
 }

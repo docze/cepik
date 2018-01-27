@@ -19,11 +19,11 @@ public class CarBrandService {
     private final CarBrandRepository carBrandRepository;
 
     @Transactional
-    public void add(CarBrandForm carBrandForm) {
+    public CarBrand add(CarBrandForm carBrandForm) {
         if (isDuplicated(carBrandForm)) {
             throw new DuplicatedCarBrandException(carBrandForm.getBrand());
         }
-        carBrandRepository.save(new CarBrand(carBrandForm.getBrand()));
+        return carBrandRepository.save(new CarBrand(carBrandForm.getBrand()));
     }
 
     public CarBrand findById(Long id) {
@@ -40,10 +40,10 @@ public class CarBrandService {
     }
 
     @Transactional
-    public void update(CarBrandForm carBrandForm, Long id) {
+    public CarBrand update(CarBrandForm carBrandForm, Long id) {
         CarBrand carBrand = findById(id);
         carBrand.setBrand(carBrandForm.getBrand());
-        carBrandRepository.save(carBrand);
+        return carBrandRepository.save(carBrand);
     }
 
     private boolean isDuplicated(CarBrandForm carBrandForm) {

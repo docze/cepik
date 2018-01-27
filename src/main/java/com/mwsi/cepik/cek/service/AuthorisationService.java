@@ -20,14 +20,14 @@ public class AuthorisationService {
     private final DriverService driverService;
 
     @Transactional
-    public void add(AuthorisationForm authorisationForm) {
+    public Authorisation add(AuthorisationForm authorisationForm) {
         Driver driver = driverService.findById(authorisationForm.getDriverId());
         Authorisation authorisation = new Authorisation();
         authorisation.setCategory(authorisationForm.getCategory());
         authorisation.setFrom(authorisationForm.getFrom());
         authorisation.setTo(authorisationForm.getTo());
         authorisation.setDriver(driver);
-        authorisationRepository.save(authorisation);
+        return authorisationRepository.save(authorisation);
     }
 
     public Authorisation findById(Long id) {
@@ -44,13 +44,13 @@ public class AuthorisationService {
     }
 
     @Transactional
-    public void update(AuthorisationForm authorisationForm, Long id) {
+    public Authorisation update(AuthorisationForm authorisationForm, Long id) {
         Driver driver = driverService.findById(authorisationForm.getDriverId());
         Authorisation dbAuthorisation = findById(id);
         dbAuthorisation.setCategory(authorisationForm.getCategory());
         dbAuthorisation.setFrom(authorisationForm.getFrom());
         dbAuthorisation.setTo(authorisationForm.getTo());
         dbAuthorisation.setDriver(driver);
-        authorisationRepository.save(dbAuthorisation);
+        return authorisationRepository.save(dbAuthorisation);
     }
 }
