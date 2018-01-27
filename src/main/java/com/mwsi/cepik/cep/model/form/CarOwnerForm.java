@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Size;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -42,6 +43,6 @@ public class CarOwnerForm {
     @Size(max = 50)
     private String institution;
 
-    private Set<Long> registrationDocumentIdsSet;
+    private List<Long> registrationDocumentIdsList;
 
 }

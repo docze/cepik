@@ -8,5 +8,7 @@ import java.util.Optional;
 public interface CarOwnerRepository extends JpaRepository<CarOwner, Long> {
     Optional<CarOwner> findById(Long id);
 
-    int countByPeselOrRegon(String pesel, String regon);
+    int countByRegon(String regon);
+
+    int countByPesel(String pesel);
 }

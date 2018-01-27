@@ -1,6 +1,6 @@
 package com.mwsi.cepik.configuration;
 
-import com.google.common.collect.Sets;
+import com.google.common.collect.Lists;
 import com.mwsi.cepik.cek.model.Address;
 import com.mwsi.cepik.cep.model.*;
 import com.mwsi.cepik.cep.repository.*;
@@ -95,7 +95,7 @@ public class InitCEPDatabase {
             carOwner.setAddress(new Address("Warszawa", "01-222", "Marszałkowska", "33a", "22"));
             carOwner.setInstitution("Urzad m.st. Warszawy");
             carOwner.setPesel("950113" + (int) (10000 + (Math.random() * 89999)));
-            carOwner.setRegistrationDocumentSet(Sets.newHashSet(registrationDocumentList.get(i%40)));
+            carOwner.setRegistrationDocumentList(Lists.newArrayList(registrationDocumentList.get(i % 40)));
             carOwnerList.add(carOwner);
         }
         carOwnerRepository.save(carOwnerList);

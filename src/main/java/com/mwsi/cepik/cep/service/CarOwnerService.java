@@ -40,10 +40,10 @@ public class CarOwnerService {
         carOwner.setInstitution(carOwnerForm.getInstitution());
         carOwner.setPesel(carOwnerForm.getPesel());
         carOwner.setRegon(carOwnerForm.getRegon());
-        Set<RegistrationDocument> registrationDocumentSet = carOwnerForm.getRegistrationDocumentIdsSet().stream()
+        List<RegistrationDocument> registrationDocumentList = carOwnerForm.getRegistrationDocumentIdsList().stream()
                 .map(registrationDocumentService::findById)
-                .collect(Collectors.toSet());
-        carOwner.setRegistrationDocumentSet(registrationDocumentSet);
+                .collect(Collectors.toList());
+        carOwner.setRegistrationDocumentList(registrationDocumentList);
         carOwnerRepository.save(carOwner);
     }
 
@@ -74,15 +74,18 @@ public class CarOwnerService {
         dbCarOwner.setInstitution(carOwnerForm.getInstitution());
         dbCarOwner.setPesel(carOwnerForm.getPesel());
         dbCarOwner.setRegon(carOwnerForm.getRegon());
-        Set<RegistrationDocument> registrationDocumentSet = carOwnerForm.getRegistrationDocumentIdsSet().stream()
+        List<RegistrationDocument> registrationDocumentList = carOwnerForm.getRegistrationDocumentIdsList().stream()
                 .map(registrationDocumentService::findById)
-                .collect(Collectors.toSet());
-        dbCarOwner.setRegistrationDocumentSet(registrationDocumentSet);
+                .collect(Collectors.toList());
+        dbCarOwner.setRegistrationDocumentList(registrationDocumentList);
         carOwnerRepository.save(dbCarOwner);
     }
 
     private boolean isDuplicated(CarOwnerForm carOwnerForm) {
-        int count = carOwnerRepository.countByPeselOrRegon(carOwnerForm.getPesel(), carOwnerForm.getRegon());
-        return count != 0;
+        if (carOwnerForm.getPesel() == null) {
+            return 0 != carOwnerRepository.countByRegon(carOwnerForm.getRegon());
+        } else {
+            return 0 != carOwnerRepository.countByPesel(carOwnerForm.getPesel());
+        }
     }
 }

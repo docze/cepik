@@ -1,5 +1,6 @@
 package com.mwsi.cepik.cep.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -30,7 +31,8 @@ public class RegistrationDocument {
     @Column(name = "data_waznosci", nullable = false)
     private java.sql.Date to;
 
-    @ManyToMany(mappedBy = "registrationDocumentSet")
+    @ManyToMany(mappedBy = "registrationDocumentList")
+    @JsonIgnore
     private Set<CarOwner> carOwnerSet;
 
 }

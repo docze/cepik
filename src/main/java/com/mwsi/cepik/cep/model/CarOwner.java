@@ -1,6 +1,7 @@
 package com.mwsi.cepik.cep.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.mwsi.cepik.cek.model.Address;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,7 +10,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Table(name = "wlasciciel_pojazdu")
@@ -44,7 +45,7 @@ public class CarOwner {
     @OneToMany(mappedBy = "carOwner")
     @JsonIgnore
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private Set<OCInsurance> ocInsuranceSet;
+    private List<OCInsurance> ocInsuranceSet;
 
     @ManyToMany(cascade = {CascadeType.MERGE})
     @JoinTable(
@@ -52,6 +53,7 @@ public class CarOwner {
             joinColumns = {@JoinColumn(name = "id_wlasciciela")},
             inverseJoinColumns = {@JoinColumn(name = "id_dowodu")}
     )
-    private Set<RegistrationDocument> registrationDocumentSet;
+    @JsonProperty
+    private List<RegistrationDocument> registrationDocumentList;
 
 }
